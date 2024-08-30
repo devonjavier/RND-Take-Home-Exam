@@ -1,0 +1,23 @@
+
+<div class="addquestioncontainer">
+    <span id="addtitle"> Add a Question </span>
+    <form id="createForm" action="/create" method="post">
+        <input type="text" id="question" name="newQuestion" placeholder="Question" required> <br>
+        
+        <div id="choices">
+            <div class="choicecontainer">
+                <input type="text" class="choice-input" name="choices[]" placeholder="Choice 1" required>
+                <button type="button" onclick="removeChoice(this);"> Remove? </button>
+                <input type="radio" name="correct_choice" value="0"> Correct?
+            </div>
+            <div class="choicecontainer">
+                <input type="text" class="choice-input" name="choices[]" placeholder="Choice 2" required>
+                <button type="button" onclick="removeChoice(this);"> Remove? </button>
+                <input type="radio" name="correct_choice" value="1"> Correct?
+            </div>
+        </div>
+
+        <button type="button" onClick="addChoice();"> Add Choice </button>
+        <button type="submit"> Submit </button>
+    </form>
+</div>
