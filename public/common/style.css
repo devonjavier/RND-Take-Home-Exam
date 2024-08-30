@@ -8,3 +8,22 @@
     bottom: 0;
     right: 0;
 }
+
+.questioncontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+/* 
+#question{
+
+} */
+
+#title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
