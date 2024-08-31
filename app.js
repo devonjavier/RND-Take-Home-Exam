@@ -1,3 +1,8 @@
+/*
+    Name: Devon Jarek Y. Javier
+    Back-end development Challenge take-home exam
+*/
+
 const express = require('express')
 const server = express();
 
@@ -26,7 +31,8 @@ const questionSchema = new mongoose.Schema({
 
 const questionModel = mongoose.model('Question', questionSchema);
 
-// routes for exam
+// IMPORTANT ROUTES FOR EXAM
+
 server.post('/create', (req, resp) => {
 
     const {
@@ -94,21 +100,6 @@ server.post('/update', (req, resp) => {
         }
     })
     
-})
-
-// pages
-server.get('/', (req, resp) => {
-    resp.render('main',{
-        layout: 'index',
-        title: 'Backend Development Challenge'
-    });
-});
-
-server.get('/add', (req, resp) => {
-    resp.render('add', {
-        layout: 'index',
-        title: 'Add a Question'
-    });
 });
 
 server.get('/get', (req, resp) => {
@@ -162,8 +153,42 @@ server.get('/list', (req, resp) => {
     }); 
 });
 
+server.post('/check-answer', (req, resp) => {
+    const { 
+        question_id, 
+        selected 
+    } = req.body
+
+    questionModel.findById(question_id).lean().then((questiondata) => {
+
+        const result = parseInt(selected) === questiondata.correct_index
+
+        resp.render('result', {
+            layout: 'index',
+            title: 'result',
+            result: result
+        });
+    })
+});
 
 
+
+
+
+// other crud functions
+server.get('/', (req, resp) => {
+    resp.render('main',{
+        layout: 'index',
+        title: 'Backend Development Challenge'
+    });
+});
+
+server.get('/add', (req, resp) => {
+    resp.render('add', {
+        layout: 'index',
+        title: 'Add a Question'
+    });
+});
 
 server.listen(3000, () => {
     console.log('Listening on host port 3000');

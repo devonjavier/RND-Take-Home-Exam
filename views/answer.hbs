@@ -1,0 +1,17 @@
+<div class="answerquestioncontainer">
+    <form action="/check-answer" method="POST">
+        <input type="hidden" name="question_id" value="{{question._id}}">
+
+        <span>{{question.question}}</span>
+        <ul>
+            {{#each question.choices}}
+                <li>
+                    <input type="radio" name="selected" value="{{@index}}" id="choice_{{@index}}">
+                    <label for="choice_{{@index}}">{{this.choice}}</label>
+                </li>
+            {{/each}}
+        </ul>
+
+        <button type="submit">Submit Answer</button>
+    </form>
+</div>

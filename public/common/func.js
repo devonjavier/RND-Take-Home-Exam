@@ -1,7 +1,8 @@
 
+
+// function to find question id prior to conducting an action
 function idForm(action){
-    // go to href first to enter id
-    // after go to /handleAction:id
+    
 
     let id = prompt('Question ID');
 
@@ -27,18 +28,7 @@ function idForm(action){
 
 }
 
-function addQuestion(){
-    window.location.href = '/add';
-}
-
-function viewList(){
-    window.location.href = '/list';
-}
-
-function returnHome(){
-    window.location.href = '/';
-}
-
+// function add choice for creating a new question
 function addChoice(){
     const choices = document.getElementById('choices');
     const cur_index = choices.children.length;
@@ -54,6 +44,7 @@ function addChoice(){
     choices.insertAdjacentHTML('beforeend', newchoiceHTML)
 }
 
+// function add choice for editing a pre-existing question
 function addEditChoice(){
     const choices = document.getElementById('editchoices');
     const cur_index = choices.children.length;
@@ -69,7 +60,22 @@ function addEditChoice(){
     choices.insertAdjacentHTML('beforeend', newchoiceHTML)
 }
 
+// function to remove one of the choices for a question
 function removeChoice(button){
     const choicecontainer = button.parentElement
     choicecontainer.remove()
+}
+
+
+// functions for navigation
+function addQuestion(){
+    window.location.href = '/add';
+}
+
+function viewList(){
+    window.location.href = '/list';
+}
+
+function returnHome(){
+    window.location.href = '/';
 }
