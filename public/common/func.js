@@ -12,13 +12,15 @@ function idForm(action){
 
     switch(action){
         case 'edit':
-            window.location.href = `/edit?id=${id}`;
+            window.location.href = `/change?id=${id}`;
             break;
         case 'delete':
-            window.location.href = `/delete?id=${id}`;
+            fetch(`/delete?id=${id}`, {
+                method: 'DELETE'
+            });
             break;
         case 'answer':
-            window.location.href = `/check-answer?id=${id}`;
+            window.location.href = `/answer?id=${id}`;
             break;
     }
 
@@ -27,6 +29,14 @@ function idForm(action){
 
 function addQuestion(){
     window.location.href = '/add';
+}
+
+function viewList(){
+    window.location.href = '/list';
+}
+
+function returnHome(){
+    window.location.href = '/';
 }
 
 function addChoice(){

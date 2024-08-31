@@ -31,6 +31,30 @@ body, html {
     width: 80vw; 
 }
 
+.questionlistcontainer{
+    display: flex;
+    flex-direction: column;
+    height: 75vh; 
+    width: 80vw;  
+    overflow-y: auto; 
+    padding: 10px;  
+    box-sizing: border-box; 
+}
+
+.questioncontainer{
+    background-color: #D3D3D3;
+    align-items: center;
+    display: flex;
+    margin: 2px;
+    border-radius: 2%;
+    border-color: black;
+    height: 100px;
+}
+
+.questioncontainer span:last-child{
+    margin-left: auto;
+}
+
 /* 
 #question{
 

@@ -50,15 +50,25 @@ server.post('/create', (req, resp) => {
         return questionModel.findOne({question: question})
 
     }).then((foundQuestion) => {
-        console.log(foundQuestion);
-        resp.render('main', {
-            layout: 'index',
-            title: 'Backend Development Challenge'
-        });
+        resp.redirect('/');
     }).catch((err) => {
         console.log('error');
     });
         
+});
+
+server.delete('/delete', (req, resp) => {
+    console.log('enter');
+    const question_id  = req.query.id;
+    questionModel.findByIdAndDelete(question_id)
+        .then(deleted => {
+            console.log(deleted);
+            if (!deleted) {
+                console.log('id not found')
+            }
+            console.log('deleted');
+        });
+
 });
 
 // pages
@@ -74,6 +84,26 @@ server.get('/add', (req, resp) => {
         layout: 'index',
         title: 'Add a Question'
     });
+});
+
+server.get('/list', (req, resp) => {
+    let questionlist = new Array();
+    questionModel.find().then((questions) =>{
+
+        for(const current_q of questions){
+            questionlist.push({
+                quiz_question : current_q.question,
+                choices : current_q.choices,
+                correct_index : current_q.correct_index
+            });
+        }
+
+        resp.render('list', {
+            layout: 'index',
+            title: 'Question List',
+            questionlist: questionlist  
+        })
+    }); 
 });
 
 
