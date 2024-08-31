@@ -1,0 +1,23 @@
+<div class="editformcontainer">
+    <form action="/update" method="POST">
+        <input type="hidden" name="question_id" value="{{question._id}}">
+        <label for="question">Question:</label><br>
+        <input type="text" id="question" name="question" value="{{question.question}}"><br>
+
+        <label for="choices">Choices:</label>
+        <div id="editchoices">
+            {{#each question.choices}}
+                <div class="choicecontainer">
+                    <input type="radio" name="correct_choice" value="{{@index}}" {{#if this.isCorrect}}checked{{/if}}>
+                    <input type="text" name="choices[]" value="{{this.choice}}">
+                    <button type="button" onclick="removeChoice(this)">Remove?</button>
+                </div>
+            {{/each}}
+        </div>
+
+        <button type="button" onclick="addEditChoice()">Add Choice</button><br>
+        <button type="submit">Save Changes</button>
+    </form>
+   
+    
+</div>

@@ -12,7 +12,7 @@ function idForm(action){
 
     switch(action){
         case 'edit':
-            window.location.href = `/change?id=${id}`;
+            window.location.href = `/get?id=${id}&action=edit`;
             break;
         case 'delete':
             fetch(`/delete?id=${id}`, {
@@ -20,7 +20,7 @@ function idForm(action){
             });
             break;
         case 'answer':
-            window.location.href = `/answer?id=${id}`;
+            window.location.href = `/get?id=${id}&action=answer`;
             break;
     }
 
@@ -48,6 +48,21 @@ function addChoice(){
             <input type="text" class="choice-input" name="choices[]" placeholder="Choice ${cur_index + 1}" required>
             <button type="button" onclick="removeChoice(this);"> Remove? </button>
             <input type="radio" name="correct_choice" value="${cur_index}"> Correct?
+        </div>
+    `;
+
+    choices.insertAdjacentHTML('beforeend', newchoiceHTML)
+}
+
+function addEditChoice(){
+    const choices = document.getElementById('editchoices');
+    const cur_index = choices.children.length;
+
+    const newchoiceHTML = `
+        <div class="choicecontainer">
+            <input type="radio" name="correct_choice" value="${cur_index}" {{#if this.isCorrect}}checked{{/if}}>
+            <input type="text" name="choices[]" placeholder="Choice ${cur_index + 1}">
+            <button type="button" onclick="removeChoice(this)">Remove?</button>
         </div>
     `;
 

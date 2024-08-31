@@ -51,14 +51,18 @@ body, html {
     height: 100px;
 }
 
-.questioncontainer span:last-child{
-    margin-left: auto;
+.correct-index{
+    align-self: flex-end;
+    margin-top: 3px;
 }
 
-/* 
-#question{
-
-} */
+.editformcontainer{
+    background-color: #E0B0FF;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    width: 80vw; 
+}
 
 .menubuttons{
     width: 300px;

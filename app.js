@@ -12,6 +12,7 @@ server.engine('hbs', handlebars.engine({
 }));
 
 const mongoose = require('mongoose');
+const e = require('express');
 const mongo_uri = 'mongodb://127.0.0.1:27017/quiz-website';
 mongoose.connect(mongo_uri);
 
@@ -27,7 +28,6 @@ const questionModel = mongoose.model('Question', questionSchema);
 
 // routes for exam
 server.post('/create', (req, resp) => {
-    console.log(req.body);
 
     const {
         newQuestion: question,
@@ -58,7 +58,6 @@ server.post('/create', (req, resp) => {
 });
 
 server.delete('/delete', (req, resp) => {
-    console.log('enter');
     const question_id  = req.query.id;
     questionModel.findByIdAndDelete(question_id)
         .then(deleted => {
@@ -70,6 +69,32 @@ server.delete('/delete', (req, resp) => {
         });
 
 });
+
+server.post('/update', (req, resp) => {
+
+    const update_ques = {
+        question: req.body.question,
+        choices: req.body.choices,
+        correct_index: parseInt(req.body.correct_choice, 10)
+    };
+
+
+    if (!update_ques.question || !update_ques.choices || update_ques.choices.length < 2 || update_ques.correct_index === undefined) {
+        console.log('error, cancelling');
+        resp.status(400).send('Invalid input');
+        return; 
+    }
+
+    questionModel.findOneAndUpdate({_id : req.body.question_id}, update_ques, {new : true}).lean()
+    .then((updated) => {
+        if(!updated){
+            console.log('ques not found');
+        } else {
+            resp.redirect('/');
+        }
+    })
+    
+})
 
 // pages
 server.get('/', (req, resp) => {
@@ -83,6 +108,37 @@ server.get('/add', (req, resp) => {
     resp.render('add', {
         layout: 'index',
         title: 'Add a Question'
+    });
+});
+
+server.get('/get', (req, resp) => {
+    const questionId = req.query.id;
+    const action = req.query.action;
+
+    questionModel.findById(questionId).lean().then((questiondata) => {
+        questiondata.choices = questiondata.choices.map((current_choice, index) => {
+            return {
+                choice : current_choice,
+                isCorrect : index === questiondata.correct_index
+            }
+        });
+
+        if(action === 'edit'){
+            resp.render('edit', {
+                layout: 'index',
+                title: 'Edit Question',
+                question : questiondata
+            });
+        } else if (action === 'answer') {
+            resp.render('answer', {
+                layout: 'index',
+                title: 'Answer Question',
+                question : questiondata
+            });
+        } else {
+            console.log('error');
+            return;
+        }
     });
 });
 
